@@ -34,16 +34,22 @@ Installation
 1) Add the following line to your Symfony2 deps file:
     
     [JQueryFileUploadBundle]
-        git=http://github.com/punkave/symfony2-file-uploader-bundle.git
-        target=/bundles/PunkAve/FileUploaderBundle
+        git=git@github.com:mylen/jquery-file-upload-bundle.git
+        target=/bundles/Mylen/FileUploaderBundle
 
 2) Modify your AppKernel with the following line:
 
-    new BlueImp\JQueryFileUploadBundle\JQueryFileUploadBundle(),
+    ```php
+    $bundles = array(
+        ...
+        new Mylen\JQueryFileUploadBundle\JQueryFileUploadBundle(),
+    ```
 
 3) If you do not already have it, add the following line to your autoload.php file:
 
-    'PunkAve' => __DIR__.'/../vendor/bundles',
+    ```php
+    'Mylen' => __DIR__.'/../vendor/bundles',
+    ```
 
 4) Install your vendors:
 
@@ -55,7 +61,7 @@ Usage
 Your page must contain Underscore templates to render the file list and uploader. You can use our templates like this:
 
     {# Underscore templates for the uploader #}
-    {% include "JQueryFileUploadBundle:Default:templates.html.twig" %}
+    {% include "JQueryFileUploadBundle::templates.html.twig" %}
 
 It is sufficient to do so anywhere in the body. You can copy and modify templates.html.twig if you wish and include it from your own directory. Just don't remove the data-* attributes. The rest of the markup is up to you.
 
