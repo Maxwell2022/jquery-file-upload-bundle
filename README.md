@@ -66,10 +66,10 @@ Installation
 ```
 4. Add these to your configuration file
 ```yaml
-# app/config/config.yml
-imports:
-    - { resource: '@JQueryFileUploadBundle/Resources/config/filters.yml' }
-    - { resource: '@JQueryFileUploadBundle/Resources/config/assetic.yml' }
+    # app/config/config.yml
+    imports:
+        - { resource: '@JQueryFileUploadBundle/Resources/config/filters.yml' }
+        - { resource: '@JQueryFileUploadBundle/Resources/config/assetic.yml' }
 ```
 You are welcome to customize these files, just copy them in your app/config directory. As an exemple, you can restrict authorized file type. You can also bundle the CSS and JS files to your app CSS and JS; then remove the assetic.yml...
 
@@ -103,7 +103,7 @@ Usage
 
 You can use our templates like this:
 ```twig
-    {% include "JQueryFileUploadBundle:Default:templates.html.twig" %}
+    {% include "JQueryFileUploadBundle::templates.html.twig" %}
 ```
 or if you want to customize the view:
 ```twig
