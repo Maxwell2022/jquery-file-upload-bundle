@@ -57,15 +57,16 @@ Installation
 
 2. Modify your AppKernel with the following line:
 ```php
-            new Mylen\JQueryFileUploadBundle\JQueryFileUploadBundle(),
+    new Mylen\JQueryFileUploadBundle\JQueryFileUploadBundle(),
 ```
 
 3. Update composer
 ```sh
    php composer.phar update
 ```
-4. Add these to your configuration file (app/config/config.yml)
-```
+4. Add these to your configuration file
+```yaml
+# app/config/config.yml
 imports:
     - { resource: '@JQueryFileUploadBundle/Resources/config/filters.yml' }
     - { resource: '@JQueryFileUploadBundle/Resources/config/assetic.yml' }
@@ -74,11 +75,11 @@ You are welcome to customize these files, just copy them in your app/config dire
 
 5. add routing
 ```yaml
-# app/config/routing.yml
-_mylen_jfub:
-    resource: "@JQueryFileUploadBundle/Controller/"
-    type:     annotation
-    prefix:   /_jfub
+    # app/config/routing.yml
+    _mylen_jfub:
+        resource: "@JQueryFileUploadBundle/Controller/"
+        type:     annotation
+        prefix:   /_jfub
 ```
 
 6. install web assets
@@ -89,7 +90,6 @@ php app/console assets:install web/
 7. run assetic dump
 ```sh
 php app/console assetic:dump
-```
 ```
 
 Configuration Reference
