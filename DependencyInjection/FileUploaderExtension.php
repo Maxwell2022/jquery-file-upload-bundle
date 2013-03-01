@@ -38,6 +38,7 @@ class FileUploaderExtension extends Extension
         $definition->setArguments(array(
             $config['file_base_path'],
             $config['web_base_path'],
+            $config['app_folder'],
             $config['allowed_extensions'],
             $config['sizes'],
             $config['originals'],

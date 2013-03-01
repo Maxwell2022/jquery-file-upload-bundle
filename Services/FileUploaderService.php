@@ -3,23 +3,24 @@
 namespace Mylen\JQueryFileUploadBundle\Services;
 
 use Mylen\JQueryFileUploadBundle\Services\IFileUploaderService;
-use Mylen\JQueryFileUploadBundle\Services\IFileManager;
 use Mylen\JQueryFileUploadBundle\Services\UploadHandler;
 
 class FileUploaderService implements IFileUploaderService
 {
     protected $fileBasePath;
     protected $webBasePath;
+    protected $appFolder;
 
     protected $allowedExtensions;
     protected $sizes;
     protected $originals;
     protected $uploadHandlerFactory;
 
-    public function __construct($fileBasePath = null, $webBasePath = null, $allowedExtensions = null, $sizes = null, $originals = null)
+    public function __construct($fileBasePath, $webBasePath, $folder, $allowedExtensions, $sizes, $originals)
     {
         $this->fileBasePath = $fileBasePath;
         $this->webBasePath = $webBasePath;
+        $this->appFolder = $folder;
         $this->allowedExtensions = $allowedExtensions;
         $this->sizes = $sizes;
         $this->originals = $originals;
@@ -28,7 +29,7 @@ class FileUploaderService implements IFileUploaderService
     /**
      * {@inheritdoc }
      */
-    public function handleFileUpload($folder)
+    public function handleFileUpload()
     {
         // Build a regular expression like /(\.gif|\.jpg|\.jpeg|\.png)$/i
         $allowedExtensionsRegex = '/('
@@ -40,8 +41,8 @@ class FileUploaderService implements IFileUploaderService
 
         $sizes = (isset($this->sizes) && is_array($this->sizes)) ? $this->sizes : array();
 
-        $filePath = $this->fileBasePath . '/' . $folder;
-        $webPath = $this->webBasePath . '/' . $folder;
+        $filePath = $this->fileBasePath . '/' . $this->appFolder;
+        $webPath = $this->webBasePath . '/' . $this->appFolder;
 
         foreach ($sizes as &$size) {
             $size['upload_dir'] = $filePath . '/' . $size['folder'] . '/';

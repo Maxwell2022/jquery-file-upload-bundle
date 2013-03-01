@@ -24,10 +24,9 @@ interface IFileUploaderService
      * the 'folder' option to distinguish this set of uploaded files
      * from others.
      *
-     * @param   string              $folder     The folder to upload/delete or retrieve the files from
      * @return  IResponseContainer              Contains the header, body and/or the file to send
      */
-    public function handleFileUpload($folder);
+    public function handleFileUpload();
 
     public function getFileBasePath();
     

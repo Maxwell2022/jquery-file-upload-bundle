@@ -62,7 +62,7 @@ class DefaultController extends Controller
     {
         /** @var FileUploader */
         $uploader = $this->get('mylen.file_uploader');
-        return $uploader->handleFileUpload($this->container->getParameter('app.data_dir'));
+        return $uploader->handleFileUpload();
     }
 
     /**

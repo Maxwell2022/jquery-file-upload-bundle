@@ -24,6 +24,7 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('uploader_service')->defaultValue('Mylen\JQueryFileUploadBundle\Services\FileUploaderService')->end()
             ->scalarNode('file_base_path')->defaultValue('%kernel.root_dir%/../web/uploads')->end()
             ->scalarNode('web_base_path')->defaultValue('/uploads')->end()
+            ->scalarNode('app_folder')->defaultValue('tmp')->end()
             ->arrayNode('allowed_extensions')
                 ->defaultValue(array(
                     'gif', #image/gif
