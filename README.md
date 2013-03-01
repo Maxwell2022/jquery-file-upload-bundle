@@ -70,6 +70,10 @@ Installation
     imports:
         - { resource: '@JQueryFileUploadBundle/Resources/config/filters.yml' }
         - { resource: '@JQueryFileUploadBundle/Resources/config/assetic.yml' }
+
+    ...
+    # Use default configuration
+    file_uploader: ~
 ```
 You are welcome to customize these files, just copy them in your app/config directory. As an exemple, you can restrict authorized file type. You can also bundle the CSS and JS files to your app CSS and JS; then remove the assetic.yml...
 
