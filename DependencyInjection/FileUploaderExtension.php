@@ -23,10 +23,7 @@ class FileUploaderExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        var_dump($config);die;
-
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('parameters.yml');
         $loader->load('filters.yml');
         //$loader->load('assetic.yml');
 
@@ -41,13 +38,13 @@ class FileUploaderExtension extends Extension
      */
     private function configureFileUpload(array $config, ContainerBuilder $container)
     {
-        $definition = new Definition('Mylen\JQueryFileUploadBundle\Services\FileUploaderService');
+        $definition = new Definition($config['uploader_service']);
         $definition->setArguments(array(
-            $config['file_uploader']['file_base_path'],
-            $config['file_uploader']['web_base_path'],
-            $config['file_uploader']['allowed_extensions'],
-            $config['file_uploader']['sizes'],
-            $config['file_uploader']['originals'],
+            $config['file_base_path'],
+            $config['web_base_path'],
+            $config['allowed_extensions'],
+            $config['sizes'],
+            $config['originals'],
         ));
 
         // Register the service in the container (default scope is container)
