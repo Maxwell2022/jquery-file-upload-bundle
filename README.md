@@ -67,21 +67,31 @@ Installation
 4. Add these to your configuration file (app/config/config.yml)
 ```
 imports:
-    - { resource: '@JQueryFileUploadBundle/Resources/config/parameters.yml' }
-    - { resource: '@JQueryFileUploadBundle/Resources/config/services.yml' }
     - { resource: '@JQueryFileUploadBundle/Resources/config/filters.yml' }
     - { resource: '@JQueryFileUploadBundle/Resources/config/assetic.yml' }
 ```
 You are welcome to customize these files, just copy them in your app/config directory. As an exemple, you can restrict authorized file type. You can also bundle the CSS and JS files to your app CSS and JS; then remove the assetic.yml...
-
-5. install web assets
+5. add routing
+```yaml
+# app/config/routing.yml
+_mylen_jfub:
+    resource: "@JQueryFileUploadBundle/Controller/"
+    type:     annotation
+    prefix:   /_jfub
+```
+6. install web assets
 ```sh
 php app/console assets:install web/
 ```
-6. run assetic dump
+7. run assetic dump
 ```sh
 php app/console assetic:dump
 ```
+
+Configuration Reference
+=======================
+
+* [Configuration Reference](https://github.com/Maxwell2022/jquery-file-upload-bundle/blob/PR1-max/Resources/doc/configuration_reference.md)
 
 Usage
 =====
