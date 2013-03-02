@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 class DefaultController extends Controller
 {
     /**
+     * Return the service handling the file upload
      *
      * @throws \Exception
      * @return \Mylen\JQueryFileUploadBundle\Services\IResponseContainer
