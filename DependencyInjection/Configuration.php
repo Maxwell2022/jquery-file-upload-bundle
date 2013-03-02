@@ -24,7 +24,7 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('uploader_service')->defaultValue('Mylen\JQueryFileUploadBundle\Services\FileUploaderService')->end()
             ->scalarNode('file_base_path')->defaultValue('%kernel.root_dir%/../web/uploads')->end()
             ->scalarNode('web_base_path')->defaultValue('/uploads')->end()
-            ->scalarNode('app_folder')->defaultValue('tmp')->end()
+            ->scalarNode('app_folder')->defaultValue('jfub')->end()
             ->arrayNode('allowed_extensions')
                 ->defaultValue(array(
                     'gif', #image/gif
@@ -66,21 +66,6 @@ class Configuration implements ConfigurationInterface
                         'max_width' => 80,
                         'max_height' => 80,
                     ),
-                    'small' => array(
-                        'folder' => 'small',
-                        'max_width' => 320,
-                        'max_height' => 480,
-                    ),
-                    'medium' => array(
-                        'folder' => 'medium',
-                        'max_width' => 640,
-                        'max_height' => 960,
-                    ),
-                    'large' => array(
-                        'folder' => 'large',
-                        'max_width' => 1140,
-                        'max_height' => 1140,
-                    )
                 ))
                 ->prototype('array')
                 ->children()
