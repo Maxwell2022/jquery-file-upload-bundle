@@ -14,46 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/", name="jfub_default")
-     * @Method({"GET"})
-     * @Template
-     */
-    public function indexAction()
-    {
-        /** @var IFileUploader */
-        $uploader = $this->get('mylen.file_uploader');
-        $webDir = $uploader->getFileBasePath();
-
-        $builder = $this->createFormBuilder();
-        $builder->add('name');
-
-        $form = $builder->getForm();
-
-        return array('form' => $form->createView());
-    }
-
-    /**
-     * @Route("/", name="jfub_save")
-     * @Method({"POST"})
-     */
-    public function postAction()
-    {
-        /** @var IFileUploader */
-        $uploader = $this->get('mylen.file_uploader');
-        $webDir = $uploader->getFileBasePath();
-
-        $form = $this->createFormBuilder()->add('name')->getForm();
-
-        $form->bind($this->getRequest());
-        if ($form->isValid()) {
-            $this->get('session')->getFlashBag()->add('notice', 'File upload is valid!');
-        } else {
-            $this->get('session')->getFlashBag()->add('error', 'File upload is invalid!');
-        }
-        return $this->redirect($this->generateUrl('default'));
-    }
-
-    /**
      *
      * @throws \Exception
      * @return \Mylen\JQueryFileUploadBundle\Services\IResponseContainer
