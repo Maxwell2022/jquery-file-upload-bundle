@@ -40,7 +40,7 @@
         <!-- The file upload form used as target for the file upload widget -->
         {% block js_blueimp_form %}
             <!--  TODO: change path -->
-            <form id="fileupload" action="{{ path('jfub_default') }}" method="POST" {{ form_enctype(form) }}>
+            <form id="fileupload" action="{{ path('jfub_files_put') }}" method="POST" {{ form_enctype(form) }}>
                 {{ form_widget(form) }}
                 {% include "JQueryFileUploadBundle::form.html.twig" %}
             </form>
