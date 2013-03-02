@@ -27,9 +27,4 @@ interface IFileUploaderService
      * @return  IResponseContainer              Contains the header, body and/or the file to send
      */
     public function handleFileUpload();
-
-    public function getFileBasePath();
-    
-    public function getWebBasePath();
-    
 }

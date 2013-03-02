@@ -31,15 +31,10 @@ class FileUploaderService implements IFileUploaderService
      */
     public function handleFileUpload()
     {
-        // Build a regular expression like /(\.gif|\.jpg|\.jpeg|\.png)$/i
-        $allowedExtensionsRegex = '/('
-                . implode('|',
-                        array_map(function ($extension)
-                                {
-                                    return '\.' . $extension;
-                                }, $this->allowedExtensions)) . ')$/i';
+        // Build a regular expression like #\.(gif|jpg|jpeg|png)$#i
+        $allowedExtensionsRegex = '#\.('.preg_quote(implode('|', $this->allowedExtensions)).'$#i';
 
-        $sizes = (isset($this->sizes) && is_array($this->sizes)) ? $this->sizes : array();
+        $sizes = (is_array($this->sizes)) ? $this->sizes : array();
 
         $filePath = $this->fileBasePath . '/' . $this->appFolder;
         $webPath = $this->webBasePath . '/' . $this->appFolder;
@@ -59,36 +54,13 @@ class FileUploaderService implements IFileUploaderService
 
         @mkdir($uploadDir, 0777, true);
 
-        return $this->getUploadHandlerFactory()->createUploadHandler(
-                array(
-                        'upload_dir' => $uploadDir, 
-                        'upload_url' => $webPath . '/' . $originals['folder'] . '/', 
-                        'image_versions' => $sizes, 
-                        'accept_file_types' => $allowedExtensionsRegex
-                        ), 
-                false
-                );
+        return $this->getUploadHandlerFactory()->createUploadHandler(array(
+            'upload_dir' => $uploadDir,
+            'upload_url' => $webPath . '/' . $originals['folder'] . '/',
+            'image_versions' => $sizes,
+            'accept_file_types' => $allowedExtensionsRegex
+            ),
+            false
+        );
     }
-    
-    public function getUploadHandlerFactory() {
-        if (isset($this->uploadHandlerFactory)) {
-            return $this->uploadHandlerFactory;
-        } else {
-            return new UploadHandlerFactory();
-        }
-    }
-    
-    public function setUploadHandlerFactory($uploadHandlerFactory) {
-        $this->uploadHandlerFactory = $uploadHandlerFactory;
-    }
-    
-    public function getFileBasePath()
-    {
-        return $this->fileBasePath;
-    }
-    
-    public function getWebBasePath() {
-        return $this->webBasePath;
-    }
-    
 }

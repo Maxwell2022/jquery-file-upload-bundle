@@ -8,9 +8,7 @@
  */
 namespace Mylen\JQueryFileUploadBundle\Services;
 
-use UploadHandler as BaseUploadHandler;
-
-class UploadHandler extends BaseUploadHandler implements IResponseContainer
+class UploadHandler extends BaseFileHandler implements IResponseContainer
 {
     protected $type = 200;
     protected $body = '';
