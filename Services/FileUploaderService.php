@@ -4,10 +4,12 @@ namespace Mylen\JQueryFileUploadBundle\Services;
 
 use Mylen\JQueryFileUploadBundle\Services\IFileUploaderService;
 use Mylen\JQueryFileUploadBundle\Services\UploadHandler;
+use Mylen\JQueryFileUploadBundle\Services\Validator\NoValidator;
+use Mylen\JQueryFileUploadBundle\Services\Writer\FsWriter;
 
 class FileUploaderService implements IFileUploaderService
 {
-    protected $fileBasePath;
+    protected $handler;
     protected $webBasePath;
     protected $appFolder;
 
@@ -16,8 +18,16 @@ class FileUploaderService implements IFileUploaderService
     protected $originals;
     protected $uploadHandlerFactory;
 
+
+
     public function __construct($fileBasePath, $webBasePath, $folder, $allowedExtensions, $sizes, $originals)
     {
+        $this->handler = new BaseFileHandler(
+            new NoValidator(),
+            new FsWriter(),
+            array()
+        );
+        //$handler;
         $this->fileBasePath = $fileBasePath;
         $this->webBasePath = $webBasePath;
         $this->appFolder = $folder;
@@ -54,13 +64,17 @@ class FileUploaderService implements IFileUploaderService
 
         @mkdir($uploadDir, 0777, true);
 
-        return $this->getUploadHandlerFactory()->createUploadHandler(array(
-            'upload_dir' => $uploadDir,
-            'upload_url' => $webPath . '/' . $originals['folder'] . '/',
-            'image_versions' => $sizes,
-            'accept_file_types' => $allowedExtensionsRegex
-            ),
-            false
-        );
+        return $this->handler;
+
+//        $this->getUploadHandlerFactory()->createUploadHandler(array(
+//            'upload_dir' => $uploadDir,
+//            'upload_url' => $webPath . '/' . $originals['folder'] . '/',
+//            'image_versions' => $sizes,
+//            'accept_file_types' => $allowedExtensionsRegex
+//            ),
+//            false
+//        );
     }
+
+
 }
