@@ -16,11 +16,16 @@ use stdClass;
 use Mylen\JQueryFileUploadBundle\Services\Writer\IWriter;
 use Mylen\JQueryFileUploadBundle\Services\Validator\IValidator;
 
-class Handler
+class BaseFileHandler
 {
     protected $options;
     protected $validator;
     protected $writer;
+
+    protected $type = 200;
+    protected $body = '';
+    protected $header = array();
+    protected $readfile = null;
 
     function __construct(IValidator $validator, IWriter $writer, $options=null)
     {
@@ -131,9 +136,15 @@ class Handler
 
     protected function get_file_objects()
     {
+        $files = array();
+        if (file_exists($this->options['upload_dir'])) {
+            //throw new \Exception(sprintf('Folder "%s" to scan does not exist', $this->options['upload_dir']));
+            $files = scandir($this->options['upload_dir']);
+        }
+
         return array_values(array_filter(array_map(
             array($this, 'get_file_object'),
-            scandir($this->options['upload_dir'])
+            $files
         )));
     }
 
@@ -525,5 +536,57 @@ class Handler
 
         header('Content-type: application/json');
         echo json_encode($success);
+    }
+
+
+
+
+
+    protected function readfile($file_path)
+    {
+        $this->readfile = $file_path;
+    }
+
+    protected function body($str)
+    {
+        $this->body .= $str;
+    }
+
+    protected function header($str)
+    {
+        if (strchr($str, ':')) {
+            $head = explode(':', $str);
+            array_push($this->header, array($head[0] => $head[1]));
+        } else {
+            if (strstr($str, '403'))
+                $this->type = 403;
+            else if (strstr($str, '405'))
+                $this->type = 405;
+        }
+    }
+
+    public function getReadFile()
+    {
+        return $this->readfile;
+    }
+
+    public function getBody()
+    {
+        return $this->body;
+    }
+
+    public function getHeader()
+    {
+        return $this->header;
+    }
+
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    public function setBody($body)
+    {
+        $this->body = $body;
     }
 }
