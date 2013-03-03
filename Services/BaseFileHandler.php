@@ -53,7 +53,6 @@ class BaseFileHandler
             'discard_aborted_uploads' => true,
             // Set to true to rotate images based on EXIF meta data, if available:
             'orient_image' => false,
-            'image_versions' => array()
         );
 
         if ($options) {
@@ -120,12 +119,6 @@ class BaseFileHandler
             $file->name = $file_name;
             $file->size = filesize($file_path);
             $file->url  = $this->options['upload_url'].rawurlencode($file->name);
-
-            foreach($this->options['image_versions'] as $version => $options) {
-                if (is_file($options['upload_dir'].$file_name)) {
-                    $file->{$version.'_url'} = $options['upload_url'].rawurlencode($file->name);
-                }
-            }
 
             $this->set_file_delete_url($file);
             return $file;
@@ -418,13 +411,6 @@ class BaseFileHandler
                         $this->orient_image($file_path);
                     }
 
-                    foreach($this->options['image_versions'] as $version => $options) {
-                        $create_scale = $this->create_scaled_image($file_path, $options, $version);
-                        if (false != $create_scale) {
-                            $file->{$version.'_url'} = $create_scale;
-                        }
-                    }
-
                 } else if ($this->options['discard_aborted_uploads']) {
                     unlink($file_path);
                     $file->error = 'abort';
@@ -525,22 +511,9 @@ class BaseFileHandler
         $file_path = $this->options['upload_dir'].$file_name;
         $success   = is_file($file_path) && $file_name[0] !== '.' && unlink($file_path);
 
-        if ($success) {
-            foreach($this->options['image_versions'] as $version => $options) {
-                $file = $options['upload_dir'].$file_name;
-                if (is_file($file)) {
-                    unlink($file);
-                }
-            }
-        }
-
         header('Content-type: application/json');
         echo json_encode($success);
     }
-
-
-
-
 
     protected function readfile($file_path)
     {
